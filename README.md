@@ -69,5 +69,4 @@ corresponding character on the standard output.```
 appears while all others instruction has been processed, the execution must stop
 with an error.```
 
-```When reading from the standard input, the end of the program is
-indicated by the special symbol ";;" otherwise absent.```
+>When reading from the standard input, the end of the program is indicated by the special symbol ";;" otherwise absent.
