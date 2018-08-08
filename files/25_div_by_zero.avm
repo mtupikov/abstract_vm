@@ -1,0 +1,7 @@
+; --------------------
+; 25_div_by_zero.avm -
+; --------------------
+push double(0)
+push int32(42)
+div
+exit
