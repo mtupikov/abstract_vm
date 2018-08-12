@@ -2,8 +2,8 @@
 ; 13_mod_types_hard.avm -
 ; -----------------------
 
-push int8(123)
-push double(312)
+push int8(42)
+push int16(2)
 mod
 
 push int32(8)

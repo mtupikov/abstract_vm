@@ -7,6 +7,8 @@
 #include "Commands.hpp"
 #include "IOperand.hpp"
 #include "../inc/OperandFactory.hpp"
+#include <math.h>
+#include <sstream>
 
 class Parser {
 public:
@@ -27,6 +29,10 @@ private:
 	static void									div();
 	static void									mod();
 	static void									pow();
+	static void									sqrt();
+	static void									min();
+	static void									max();
+	static void									clear();
 	static void									print();
 	static void 								checkForEmptyStack();
 	static void 								checkForEqualTypes(const IOperand *op1, const IOperand *op2);

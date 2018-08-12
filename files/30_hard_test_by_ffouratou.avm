@@ -1,6 +1,9 @@
+; --------------------------------
+; 29_mul_less_than_two_value.avm -
+; --------------------------------
 push int8(8);swag
 push int32(+9);swag
-push float(+9.4567890876546789765435678);swag
+push float(+9.456789087);swag
 dump
 add
 exit

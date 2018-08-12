@@ -42,6 +42,18 @@ void Parser::executeCommands(std::list<command> commands) {
 				case Pow:
 					pow();
 					break;
+				case Sqrt:
+					sqrt();
+					break;
+				case Min:
+					min();
+					break;
+				case Max:
+					max();
+					break;
+				case Clear:
+					clear();
+					break;
 				case Print:
 					print();
 					break;
@@ -173,6 +185,41 @@ void							Parser::pow() {
 	delete op1;
 	delete op2;
 }
+
+void							Parser::sqrt() {
+	checkForEmptyStack();
+	const IOperand *op1 = _operands.front();
+	_operands.pop_front();
+	double sq = ::sqrt(std::stold(op1->toString()));
+	std::ostringstream strs;
+	strs << sq;
+	std::string str = strs.str();
+	_operands.push_front(OperandFactory::createOperand(Double, str));
+}
+
+
+void							Parser::min() {
+	checkForEmptyStack();
+	const IOperand *min = _operands.front();
+	for (const IOperand *op : _operands)
+		if (std::stold(min->toString()) > std::stold(op->toString()))
+			min = op;
+	std::cout << "Min: " << std::setprecision(min->getPrecision()) << std::fixed << min->toString() <<std::endl;
+}
+
+void							Parser::max() {
+	checkForEmptyStack();
+	const IOperand *max = _operands.front();
+	for (const IOperand *op : _operands)
+		if (std::stold(max->toString()) < std::stold(op->toString()))
+			max = op;
+	std::cout << "Max: " << std::setprecision(max->getPrecision()) << std::fixed << max->toString() <<std::endl;
+}
+
+void							Parser::clear() {
+	_operands.clear();
+}
+
 
 void							Parser::print() {
 	checkForEmptyStack();

@@ -14,7 +14,7 @@ private:
 	static void							readFromFile(std::list<command> *list, char *filename);
 	static void							readFromStdIn(std::list<command> *list);
 	static void							createCommand(std::list<command> *list,
-										const std::array<std::regex, 20> &regex,
+										const std::array<std::regex, 24> &regex,
 										std::string &item);
 	static const std::string			&trim(std::string &s);
 	};

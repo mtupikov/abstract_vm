@@ -1,6 +1,8 @@
 ; --------------------------------
-; 29_mul_less_than_two_value.avm -
+; 31_pow_test.avm -
 ; --------------------------------
-push double(42)
-mul
+push double(4)
+push float(3)
+pow
+dump
 exit

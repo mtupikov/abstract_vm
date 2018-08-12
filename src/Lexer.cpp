@@ -44,7 +44,7 @@ void Lexer::readFromStdIn(std::list<command> *list) {
 }
 
 bool Lexer::checkInput(std::string s, std::list<command> *list) {
-	std::array<std::regex, 20> regex;
+	std::array<std::regex, 24> regex;
 	regex[0] =	"((\\s)+)?(push)((\\s)+)?"
 				"(int8|int16|int32|float|double)((\\s)+)?"
 				"\\(((\\s)+)?"
@@ -63,28 +63,32 @@ bool Lexer::checkInput(std::string s, std::list<command> *list) {
 	regex[5] =	"((\\s)+)?(div)((\\s)+)?(;(.+)?)?";
 	regex[6] =	"((\\s)+)?(mod)((\\s)+)?(;(.+)?)?";
 	regex[7] =	"((\\s)+)?(pow)((\\s)+)?(;(.+)?)?";
-	regex[8] =	"((\\s)+)?(pop)((\\s)+)?(;(.+)?)?";
-	regex[9] =	"((\\s)+)?(dump)((\\s)+)?(;(.+)?)?";
-	regex[10] =	"((\\s)+)?(print)((\\s)+)?(;(.+)?)?";
-	regex[11] =	"((\\s)+)?(exit)((\\s)+)?(;(.+)?)?";
-	regex[12] =	"((\\s)+)?";
-	regex[13] =	"((\\s)+)?;(.+)?";
-	regex[14] =	"((\\s)+)?int8((\\s)+)?";
-	regex[15] =	"((\\s)+)?int16((\\s)+)?";
-	regex[16] =	"((\\s)+)?int32((\\s)+)?";
-	regex[17] =	"((\\s)+)?float((\\s)+)?";
-	regex[18] =	"((\\s)+)?double((\\s)+)?";
-	regex[19] =	"\\(((\\s)+)?(\\+|-)?[\\d]+(\\.[\\d]+)?((\\s)+)?\\)";
+	regex[8] =	"((\\s)+)?(sqrt)((\\s)+)?(;(.+)?)?";
+	regex[9] =	"((\\s)+)?(min)((\\s)+)?(;(.+)?)?";
+	regex[10] =	"((\\s)+)?(max)((\\s)+)?(;(.+)?)?";
+	regex[11] =	"((\\s)+)?(clear)((\\s)+)?(;(.+)?)?";
+	regex[12] =	"((\\s)+)?(pop)((\\s)+)?(;(.+)?)?";
+	regex[13] =	"((\\s)+)?(dump)((\\s)+)?(;(.+)?)?";
+	regex[14] =	"((\\s)+)?(print)((\\s)+)?(;(.+)?)?";
+	regex[15] =	"((\\s)+)?(exit)((\\s)+)?(;(.+)?)?";
+	regex[16] =	"((\\s)+)?";
+	regex[17] =	"((\\s)+)?;(.+)?";
+	regex[18] =	"((\\s)+)?int8((\\s)+)?";
+	regex[19] =	"((\\s)+)?int16((\\s)+)?";
+	regex[20] =	"((\\s)+)?int32((\\s)+)?";
+	regex[21] =	"((\\s)+)?float((\\s)+)?";
+	regex[22] =	"((\\s)+)?double((\\s)+)?";
+	regex[23] =	"\\(((\\s)+)?(\\+|-)?[\\d]+(\\.[\\d]+)?((\\s)+)?\\)";
 
-	for (int i = 0; i < 14; i++)
+	for (int i = 0; i < 18; i++)
 		if (std::regex_match(s, std::regex(regex[i]))) {
-			if (i > 1 && i < 12) {
+			if (i > 1 && i < 16) {
 				command cmd;
-				if (i == 11)
+				if (i == 15)
 					exitInInput = true;
 				cmd.type = static_cast<commandType>(i);
 				list->push_back(cmd);
-			} else if (i != 12 && i != 13){
+			} else if (i != 16 && i != 17){
 				createCommand(list, regex, s);
 			}
 			return true;
@@ -93,7 +97,7 @@ bool Lexer::checkInput(std::string s, std::list<command> *list) {
 	return false;
 }
 
-void Lexer::createCommand(std::list<command> *list, const std::array<std::regex, 20> &regex, std::string &item) {
+void Lexer::createCommand(std::list<command> *list, const std::array<std::regex, 24> &regex, std::string &item) {
 	command cmd;
 	std::smatch resultMatch;
 
@@ -102,18 +106,18 @@ void Lexer::createCommand(std::list<command> *list, const std::array<std::regex,
 	else if (std::regex_search(item, regex[1]))
 		cmd.type = Assert;
 
-	if (std::regex_search(item, regex[14]))
+	if (std::regex_search(item, regex[18]))
 		cmd.valueType = Int8;
-	else if (std::regex_search(item, regex[15]))
+	else if (std::regex_search(item, regex[19]))
 		cmd.valueType = Int16;
-	else if (std::regex_search(item, regex[16]))
+	else if (std::regex_search(item, regex[20]))
 		cmd.valueType = Int32;
-	else if (std::regex_search(item, regex[17]))
+	else if (std::regex_search(item, regex[21]))
 		cmd.valueType = Float;
-	else if (std::regex_search(item, regex[18]))
+	else if (std::regex_search(item, regex[22]))
 		cmd.valueType = Double;
 
-	std::regex_search(item, resultMatch, regex[19]);
+	std::regex_search(item, resultMatch, regex[23]);
 	size_t start = static_cast<size_t>(resultMatch.prefix().length()) + 1;
 	size_t lenNumber = item.length() - start - resultMatch.suffix().length() - 1;
 	cmd.strValue = item.substr(start, lenNumber);

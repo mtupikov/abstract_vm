@@ -3,7 +3,7 @@
 ; -----------------------
 
 push int8(42)
-push float(2)
+push int16(2)
 div
 
 push int32(8)
